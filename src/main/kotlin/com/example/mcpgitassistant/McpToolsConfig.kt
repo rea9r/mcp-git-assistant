@@ -8,8 +8,11 @@ import org.springframework.context.annotation.Configuration
 @Configuration
 class McpToolsConfig {
 	@Bean
-	fun toolCallbackProvider(healthCheckTool: HealthCheckTool): ToolCallbackProvider =
+	fun toolCallbackProvider(
+		healthCheckTool: HealthCheckTool,
+		gitTools: GitTools,
+	): ToolCallbackProvider =
 		MethodToolCallbackProvider.builder()
-			.toolObjects(healthCheckTool)
+			.toolObjects(healthCheckTool, gitTools)
 			.build()
 }

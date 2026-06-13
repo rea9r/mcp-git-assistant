@@ -16,3 +16,6 @@ spring:
         name: mcp-git-assistant
         version: 0.0.1
         type: SYNC
+
+git-assistant:
+  repo-path: ${MCP_GIT_REPO_PATH:.}
