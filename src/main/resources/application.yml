@@ -11,3 +11,8 @@ spring:
           temperature: 1
     model:
       chat: openai
+    mcp:
+      server:
+        name: mcp-git-assistant
+        version: 0.0.1
+        type: SYNC

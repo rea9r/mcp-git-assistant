@@ -5,3 +5,5 @@ build/
 .DS_Store
 out/
 !gradle/wrapper/gradle-wrapper.jar
+
+docs/zenn/

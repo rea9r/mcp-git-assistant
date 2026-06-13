@@ -5,9 +5,6 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 
-/**
- * Step 1: Spring AI の ChatClient で最小の chat endpoint を提供する。
- */
 @RestController
 class ChatController(builder: ChatClient.Builder) {
 	private val chatClient = builder.build()

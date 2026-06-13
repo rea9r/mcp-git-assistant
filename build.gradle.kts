@@ -21,6 +21,7 @@ repositories {
 dependencies {
 	// Spring AI OpenAI (version controlled by BOM)
 	implementation(libs.spring.ai.openai)
+	implementation(libs.spring.ai.mcp.server)
 
 	implementation(libs.spring.boot.starter.web)
 	implementation(libs.jackson.module.kotlin)
