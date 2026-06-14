@@ -1,6 +1,8 @@
 package com.example.mcpgitassistant
 
 import org.springframework.ai.chat.client.ChatClient
+import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor
+import org.springframework.ai.chat.memory.ChatMemory
 import org.springframework.ai.tool.ToolCallbackProvider
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -9,15 +11,19 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class ChatController(
 	builder: ChatClient.Builder,
+	chatMemory: ChatMemory,
 	private val toolCallbackProvider: ToolCallbackProvider,
 ) {
-	private val chatClient = builder.build()
+	private val chatClient = builder
+		.defaultAdvisors(MessageChatMemoryAdvisor.builder(chatMemory).build())
+		.build()
 
 	@PostMapping("/chat")
 	fun chat(@RequestBody request: ChatRequest): ChatResponse {
 		val content = chatClient.prompt()
 			.system(SYSTEM_PROMPT)
 			.toolCallbacks(toolCallbackProvider)
+			.advisors { it.param(ChatMemory.CONVERSATION_ID, request.conversationId ?: "default") }
 			.user(request.prompt)
 			.call()
 			.content()
@@ -36,6 +42,6 @@ class ChatController(
 	}
 }
 
-data class ChatRequest(val prompt: String)
+data class ChatRequest(val prompt: String, val conversationId: String? = null)
 
 data class ChatResponse(val response: String)
